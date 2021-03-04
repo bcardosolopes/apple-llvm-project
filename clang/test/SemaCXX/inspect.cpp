@@ -17,7 +17,7 @@ void a2() {
 
 void b(int x) {
   inspect(x) -> void {
-    __ => 3; // expected-error {{cannot initialize statement expression result of type 'void' with an rvalue of type 'int'}}
+    __ => 3; // expected-error {{resulting expression type 'int' must match trailing result type 'void'}}
   };
 }
 

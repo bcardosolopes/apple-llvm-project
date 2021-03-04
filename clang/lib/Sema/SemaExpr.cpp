@@ -13979,8 +13979,17 @@ ExprResult Sema::ActOnStmtExprResult(ExprResult ER) {
   // to perform implicit conversion during the copy initialization.
   if (getCurScope()->isPatternScope()) {
     InspectExpr *IE = getCurFunction()->InspectStack.back().getPointer();
-    if (IE->hasExplicitResultType())
-      T = IE->getType();
+    if (IE->hasExplicitResultType()) {
+      QualType ER = IE->getType();
+
+      // Catch this edge case where we can't make a valid
+      // statement expression result from a void type.
+      // All other cases should be caught elsewhere when
+      // we explore convertibility between the pattern
+      // substatement and the inspect return type.
+      if (!ER.getTypePtr()->isVoidType())
+        T = ER;
+    }
   }
 
   // FIXME: Provide a better location for the initialization.
