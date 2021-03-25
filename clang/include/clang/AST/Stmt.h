@@ -4384,15 +4384,15 @@ Stmt *PatternStmt::getSubStmt() {
 }
 
 bool PatternStmt::hasPatternGuard() const {
-  if (auto *WP = dyn_cast<WildcardPatternStmt>(this))
+  if (const auto *WP = dyn_cast<WildcardPatternStmt>(this))
     return WP->hasPatternGuard();
-  else if (auto *IP = dyn_cast<IdentifierPatternStmt>(this))
+  else if (const auto *IP = dyn_cast<IdentifierPatternStmt>(this))
     return IP->hasPatternGuard();
-  else if (auto *EP = dyn_cast<ExpressionPatternStmt>(this))
+  else if (const auto *EP = dyn_cast<ExpressionPatternStmt>(this))
     return EP->hasPatternGuard();
-  else if (auto *SBP = dyn_cast<StructuredBindingPatternStmt>(this))
+  else if (const auto *SBP = dyn_cast<StructuredBindingPatternStmt>(this))
     return SBP->hasPatternGuard();
-  else if (auto *AP = dyn_cast<AlternativePatternStmt>(this))
+  else if (const auto *AP = dyn_cast<AlternativePatternStmt>(this))
     return AP->hasPatternGuard();
 
   llvm_unreachable("Unknown PatternStmt!");
